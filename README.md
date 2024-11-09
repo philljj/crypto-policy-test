@@ -13,12 +13,12 @@ with wolfSSL.
 ## Prerequisites
 
 ```sh
-$ git clone https://github.com/philljj/wolfssl.git
+git clone https://github.com/philljj/wolfssl.git
+git co fedora_crypto_policy
 ```
 
 Build wolfssl with:
 
 ```sh
-$ ./scripts/wolfssl/build_wolfssl
+./scripts/wolfssl/build_wolfssl
 ```
-
