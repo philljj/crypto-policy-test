@@ -1,0 +1,31 @@
+#!/bin/bash
+
+err_and_die() {
+  echo "error: $1"
+  exit 1
+}
+
+print_usage_and_die() {
+  echo "usage:"
+  echo "  ./scripts/policies/install_wolf_policy legacy"
+  echo "  ./scripts/policies/install_wolf_policy default"
+  echo "  ./scripts/policies/install_wolf_policy future"
+  exit 1
+}
+
+if [ $# -ne 1 ]; then
+  print_usage_and_die
+fi
+
+policy=$1
+src="crypto-policies/$policy/wolfssl.txt"
+dst="/etc/crypto-policies/back-ends/wolfssl.config"
+
+if [ ! -f $src ]; then
+  echo "error: not found: $src"
+  exit 1
+fi
+
+sudo cp $src $dst || err_and_die "cp failed"
+
+file $dst
