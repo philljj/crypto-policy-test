@@ -1,0 +1,32 @@
+#!/bin/bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+err_and_die() {
+  echo -e "error: $1: ${RED}fail${NC}"
+  exit 1
+}
+
+./scripts/policies/install_wolf_policy future || exit 1
+
+cd wolfssl || exit 1
+
+./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
+./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 1"
+
+cd ../ || exit 1
+
+./scripts/policies/install_wolf_policy default || exit 1
+
+cd wolfssl || exit 1
+
+./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
+
+cd ../ || exit 1
+
+./scripts/policies/install_wolf_policy legacy || exit 1
+
+echo ""
+echo -e "info: ${GREEN}pass${NC}"
