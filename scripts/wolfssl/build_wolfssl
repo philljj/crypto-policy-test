@@ -3,6 +3,7 @@
 if [ ! -d wolfssl ]; then
   echo "info: cloning wolfssl"
   git clone https://github.com/philljj/wolfssl.git || exit 1
+  git co fedora_crypto_policy || exit 1
 fi
 
 cd wolfssl || exit 1
