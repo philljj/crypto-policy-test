@@ -24,9 +24,5 @@ cd wolfssl || exit 1
 
 ./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
 
-cd ../ || exit 1
-
-./scripts/policies/install_wolf_policy legacy || exit 1
-
 echo ""
 echo -e "info: ${GREEN}pass${NC}"
