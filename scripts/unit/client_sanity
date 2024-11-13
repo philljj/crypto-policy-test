@@ -9,20 +9,26 @@ err_and_die() {
   exit 1
 }
 
+echo "info: future"
+
 ./scripts/policies/install_wolf_policy future || exit 1
 
 cd wolfssl || exit 1
 
 ./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
 ./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 1"
+./examples/client/client -v 2 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 2"
 
 cd ../ || exit 1
+
+echo "info: default"
 
 ./scripts/policies/install_wolf_policy default || exit 1
 
 cd wolfssl || exit 1
 
 ./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
+./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 1"
 
 echo ""
 echo -e "info: ${GREEN}pass${NC}"
