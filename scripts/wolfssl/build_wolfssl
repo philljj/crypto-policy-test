@@ -20,13 +20,22 @@ if [ $# -eq 1 ]; then
   fi
 fi
 
+#./configure \
+#  --enable-sslv3 \
+#  --with-sys-crypto-policy \
+#  --enable-sslv3 \
+#  --enable-oldtls \
+#  --enable-tlsv10 \
+#  --enable-debug \
+#  --enable-opensslextra \
+
 ./configure \
-  --with-sys-crypto-policy \
   --enable-sslv3 \
   --enable-oldtls \
   --enable-tlsv10 \
+  --enable-distro \
+  --with-sys-crypto-policy \
   --enable-debug \
-  --enable-opensslextra \
   || exit 1
 make || exit 1
 #sudo make install
