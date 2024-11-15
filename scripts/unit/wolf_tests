@@ -1,0 +1,23 @@
+#!/bin/bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+err_and_die() {
+  echo -e "error: $1: ${RED}fail${NC}"
+  exit 1
+}
+
+cd wolfssl || exit 1
+
+test_no=$(./tests/unit.test --list | grep -i crypto_policy | awk -F ':' '{print $1}')
+
+if [ -z $test_no ]; then
+  err_and_die "test_wolfSSL_crypto_policy not found"
+fi
+
+./tests/unit.test -$test_no || err_and_die "unit.test -$test_no failed"
+
+echo ""
+echo -e "info: ${GREEN}pass${NC}"

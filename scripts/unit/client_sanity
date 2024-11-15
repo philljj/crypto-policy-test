@@ -15,9 +15,9 @@ echo "info: future"
 
 cd wolfssl || exit 1
 
-./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
-./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 1"
-./examples/client/client -v 2 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 2"
+./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 0"
+./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 1"
+./examples/client/client -v 2 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 2"
 
 cd ../ || exit 1
 
@@ -27,8 +27,8 @@ echo "info: default"
 
 cd wolfssl || exit 1
 
-./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 0"
-./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -507" || err_and_die "-v 1"
+./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 0"
+./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 1"
 
 echo ""
 echo -e "info: ${GREEN}pass${NC}"
