@@ -29,12 +29,13 @@ fi
 #  --enable-opensslextra \
 
 ./configure \
+  --enable-all \
   --enable-sslv3 \
   --enable-oldtls \
   --enable-tlsv10 \
-  --enable-distro \
+  --enable-opensslextra \
   --with-sys-crypto-policy \
   --enable-debug \
   || exit 1
 make || exit 1
-#sudo make install
+sudo make install

@@ -1,2 +1,3 @@
 /wolfssl/
 *.swp
+test/test_policy

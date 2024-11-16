@@ -1,0 +1,10 @@
+#!/bin/bash
+cd test || exit 1
+
+echo "info: linking against wolfssl"
+gcc -g -Werror -Wall test_crypto_policy.c -o test_policy \
+  -DUSE_WOLFSSL \
+  -lwolfssl -L/usr/local/lib/ -I/usr/local/include/wolfssl/ \
+  || exit 1
+
+echo "info: build good"
