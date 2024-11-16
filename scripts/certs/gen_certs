@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#for x in 1024 2048 3072 4096 7680 15360; do
+for x in 1024 2048 3072 4096 ; do
+  echo $x
+  if [ ! -d certs/rsa/$x/ ]; then
+    mkdir -p certs/rsa/$x/ || exit 1
+  fi
+  openssl genrsa -out certs/rsa/$x/keypair_$x.pem $x || exit 1
+  openssl req -x509 -new -key certs/rsa/$x/keypair_$x.pem -out certs/rsa/$x/cert_$x.pem || exit 1
+
+  file certs/rsa/$x/keypair_$x.pem
+  file certs/rsa/$x/cert_$x.pem
+done
