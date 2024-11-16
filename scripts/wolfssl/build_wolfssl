@@ -21,7 +21,6 @@ if [ $# -eq 1 ]; then
 fi
 
 #./configure \
-#  --enable-sslv3 \
 #  --with-sys-crypto-policy \
 #  --enable-sslv3 \
 #  --enable-oldtls \

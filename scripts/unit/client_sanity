@@ -9,18 +9,35 @@ err_and_die() {
   exit 1
 }
 
+echo ""
+echo "info: legacy"
+./scripts/policies/install_wolf_policy legacy || exit 1
+cd wolfssl || exit 1
+
+# This will fail.
+./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 0"
+# This will be allowed.
+./examples/client/client -v 1 2>&1 | grep "wolfSSL error: tcp connect failed: Connection refused" || err_and_die "-v 1"
+./examples/client/client -v 2 2>&1 | grep "wolfSSL error: tcp connect failed: Connection refused" || err_and_die "-v 2"
+./examples/client/client -v 3 2>&1 | grep "wolfSSL error: tcp connect failed: Connection refused" || err_and_die "-v 3"
+./examples/client/client -v 4 2>&1 | grep "wolfSSL error: tcp connect failed: Connection refused" || err_and_die "-v 4"
+cd ../ || exit 1
+
+echo ""
 echo "info: future"
-
 ./scripts/policies/install_wolf_policy future || exit 1
-
 cd wolfssl || exit 1
 
 ./examples/client/client -v 0 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 0"
 ./examples/client/client -v 1 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 1"
 ./examples/client/client -v 2 2>&1 | grep "crypto_policy_init_ctx returned -5.*" || err_and_die "-v 2"
 
+# These will fail because the cert is 2048 bits, less than required 3072 bits.
+./examples/client/client -v 3 2>&1 | grep "wolfSSL Leaving ProcessBuffer, return -409" || err_and_die "-v 3"
+./examples/client/client -v 4 2>&1 | grep "wolfSSL Leaving ProcessBuffer, return -409" || err_and_die "-v 4"
 cd ../ || exit 1
 
+echo ""
 echo "info: default"
 
 ./scripts/policies/install_wolf_policy default || exit 1
