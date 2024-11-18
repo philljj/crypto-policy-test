@@ -28,6 +28,7 @@ main(int argc,
     int           ret = 0;
     WOLFSSL_CTX * ctx = NULL;
     WOLFSSL *     ssl = NULL;
+    int           fail = 0;
 
     if (argc < 4) {
         policy_print_usage_and_die();
@@ -102,10 +103,35 @@ main(int argc,
 
     if (ctx == NULL) {
         printf("info: wolfSSL_CTX_new failed\n");
+        fail = 1;
+    }
+
+    if (ctx != NULL) {
+        ret = wolfSSL_CTX_use_certificate_file(ctx, cert, WOLFSSL_FILETYPE_PEM);
+        if (ret != SSL_SUCCESS) {
+            printf("info: CTX_use_certificate_file returned: %d\n", ret);
+            wolfSSL_CTX_free(ctx);
+            ctx = NULL;
+            fail = 1;
+        }
+    }
+
+    if (ctx != NULL) {
+        ret = wolfSSL_CTX_use_PrivateKey_file(ctx, key, WOLFSSL_FILETYPE_PEM);
+        if (ret != SSL_SUCCESS) {
+            printf("info: CTX_use_certificate_key returned: %d\n", ret);
+            wolfSSL_CTX_free(ctx);
+            ctx = NULL;
+            fail = 1;
+        }
     }
 
     if (ctx != NULL) {
         ssl = wolfSSL_new(ctx);
+    }
+
+    if (ssl == NULL) {
+        fail = 1;
     }
 
     if ((list != 0) && (ssl != NULL)) {
@@ -134,7 +160,7 @@ main(int argc,
         ctx = NULL;
     }
 
-    return EXIT_SUCCESS;
+    return (fail == 1) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 

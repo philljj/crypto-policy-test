@@ -1,0 +1,26 @@
+#!/bin/bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+err_and_die() {
+  echo -e "error: $1: ${RED}fail${NC}"
+  exit 1
+}
+
+echo ""
+echo "info: 1024 legacy"
+./test/test_policy -c certs/rsa/1024/cert_1024.pem -k certs/rsa/1024/keypair_1024.pem -p crypto-policies/legacy/wolfssl.txt -v || err_and_die "1024 legacy"
+
+echo ""
+echo "info: 1024 default"
+./test/test_policy -c certs/rsa/1024/cert_1024.pem -k certs/rsa/1024/keypair_1024.pem -p crypto-policies/default/wolfssl.txt  -v && err_and_die "1024 default"
+
+echo ""
+echo "info: 1024 future"
+./test/test_policy -c certs/rsa/1024/cert_1024.pem -k certs/rsa/1024/keypair_1024.pem -p crypto-policies/future/wolfssl.txt  -v && err_and_die "1024 future"
+
+
+echo ""
+echo -e "info: ${GREEN}pass${NC}"
