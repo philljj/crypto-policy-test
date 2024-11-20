@@ -7,4 +7,10 @@ gcc -g -Werror -Wall test_crypto_policy.c -o test_policy \
   -lwolfssl -L/usr/local/lib/ -I/usr/local/include/wolfssl/ \
   || exit 1
 
+echo "info: linking against openssl"
+gcc -g -Werror -Wall openssl_test_crypto_policy.c -o openssl_test_policy \
+  -lssl -lcrypto -L/usr/local/lib/ -I/usr/local/include/openssl/ \
+  || exit 1
+
+
 echo "info: build good"
