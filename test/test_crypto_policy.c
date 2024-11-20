@@ -81,13 +81,16 @@ main(int argc,
     }
 
     if (method != NULL && *method != '\0') {
+        #if 0
         if (strcmp("tlsv1", method) == 0) {
             ctx = wolfSSL_CTX_new(wolfTLSv1_method());
         }
         else if (strcmp("tlsv11", method) == 0) {
             ctx = wolfSSL_CTX_new(wolfTLSv1_1_method());
         }
-        else if (strcmp("tlsv12", method) == 0) {
+        else
+        #endif
+        if (strcmp("tlsv12", method) == 0) {
             ctx = wolfSSL_CTX_new(wolfTLSv1_2_method());
         }
         else if (strcmp("tlsv13", method) == 0) {

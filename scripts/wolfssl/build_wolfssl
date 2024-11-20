@@ -29,11 +29,7 @@ fi
 #  --enable-opensslextra \
 
 ./configure \
-  --enable-all \
-  --enable-sslv3 \
-  --enable-oldtls \
-  --enable-tlsv10 \
-  --enable-opensslextra \
+  --enable-distro \
   --with-sys-crypto-policy \
   --enable-debug \
   || exit 1
